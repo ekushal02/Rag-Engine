@@ -1,0 +1,127 @@
+[
+  {
+    "question": "What is the final project due date for DATA 606?",
+    "ground_truth": "The final project is due on Sunday, December 8.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What percentage of the grade is based on project success?",
+    "ground_truth": "Project success accounts for 40% of the final grade.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What are the GitHub file naming conventions required for DATA 606?",
+    "ground_truth": "The required GitHub file naming conventions are: draft proposal as draft_proposal.md, final proposal as final_proposal.md, project presentation as capstone.pptx, and project report as report.md.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What are the three main phases of the DATA 606 course?",
+    "ground_truth": "The three main phases of the course are Project Proposal and Approval, Data Preparation and EDA, and Model Training and Deployment.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What is the policy on using AI tools like ChatGPT in DATA 606?",
+    "ground_truth": "Use of any artificial technical assistance such as ChatGPT or other generative technologies outside of onboard spellcheck and tools like Google Scholar is considered academic misconduct and is strictly forbidden. Students who violate this policy will receive a zero for that assignment or project.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What percentage of the grade is based on punctuality?",
+    "ground_truth": "Punctuality accounts for 10% of the final grade.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What deliverables are required for the final project in DATA 606?",
+    "ground_truth": "The required final deliverables are a project report in report.md format that includes links to the PPT and YouTube video, a project presentation in capstone.pptx format, and a project video uploaded to YouTube.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What grading scale is used in DATA 606?",
+    "ground_truth": "The grading scale is: 85-100% is an A, 70-84% is a B, 55-69% is a C, 40-54% is a D, and below 40% is an F.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "Are students allowed to work in teams for the capstone project?",
+    "ground_truth": "Individual capstone projects are encouraged, but students may work in small teams of two to three participants depending on the complexity of the project.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "What must students do if they cannot find a project idea for DATA 606?",
+    "ground_truth": "Students who cannot find a project idea should contact the instructor as soon as possible. The Data Science faculty may help with a list of possible projects aligned with the student's interests.",
+    "source": "sample.pdf"
+  },
+  {
+    "question": "How many papers were reviewed in the AI in education study?",
+    "ground_truth": "A total of 100 papers were selected, including 63 empirical papers and 37 analytic papers.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What are the four research trends identified in the AI education review?",
+    "ground_truth": "The four research trends identified are Internet of Things, swarm intelligence, deep learning and neurocomputation, and evaluation of AI in education.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What database was used to search for papers in the AI education review?",
+    "ground_truth": "The Web of Science database and the Social Science Citation Index (SSCI) journals were used to search for papers published from 2010 to 2020.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What is adaptive learning according to the AI education paper?",
+    "ground_truth": "Adaptive learning is a formative and corrective automated system that adjusts itself to suit individual learners' characteristics, needs, and preferences. Unlike feedback systems that offer stock responses, the adaptive system personalizes the learning experience.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What are the three categories of challenges AI faces in education?",
+    "ground_truth": "The three categories of challenges are: technique challenges, challenges related to the changing roles of teachers and students, and social and ethical issues.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What is the difference between feedback and adaptive learning in AI education systems?",
+    "ground_truth": "Feedback systems offer stock responses to learners based on their input, while adaptive learning systems are formative and corrective, automatically adjusting content, pace, and support to suit individual learner characteristics, needs, and preferences.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What three dimensions were used to classify research questions in the AI education review?",
+    "ground_truth": "The three dimensions used to classify research questions were: the dimension of development (focusing on knowledge presentation models), the dimension of extraction (centering on how to obtain knowledge from data mining), and the dimension of application (emphasizing human-computer interaction).",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "How many empirical studies focused on feedback in the AI education review?",
+    "ground_truth": "16 empirical studies focused on feedback.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What ethical concerns about student data does the paper raise?",
+    "ground_truth": "The paper raises concerns that individual student data may be exposed, shared, or used inappropriately, and that educators and AI engineers must carefully consider how they access, evaluate, and share big data and the results of data analysis.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What is HyDE in the context of information retrieval?",
+    "ground_truth": "I cannot answer this question based on the provided documents.",
+    "source": "none"
+  },
+  {
+    "question": "What role does swarm intelligence play in the future of AI education?",
+    "ground_truth": "Swarm intelligence may change teachers' duties from knowledge transmission to knowledge organization, and facilitate adaptivity in dynamic or unstable environments. Learners may shift from knowledge absorbers to creators who actively construct knowledge by interfacing with the system.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What screening process was used to select papers for the AI education review?",
+    "ground_truth": "Papers were selected if they involved a specific AI technique as an intervention in assisting learning or teaching and provided empirical evidence or in-depth analysis. Each full text was read and screened individually by three panel members with doctoral degrees or professorships in learning technology. The process yielded 100 articles from an original set of 121.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What affection computing techniques are described in the AI education paper?",
+    "ground_truth": "Five typical AI techniques that support affection computing are described: complex algorithms designed with human factors, visualization, XR including virtual, augmented, and mixed reality, wearable techniques such as Google glasses, and modern neuroscience.",
+    "source": "sample2.pdf"
+  },
+  {
+    "question": "What is the current stock price of Apple Inc?",
+    "ground_truth": "I cannot answer this question based on the provided documents.",
+    "source": "none"
+  },
+  {
+    "question": "What does the DATA 606 course require students to upload to YouTube?",
+    "ground_truth": "Students are required to upload their project video to YouTube and share their video via GitHub. These presentations serve as a rehearsal for their main in-class presentation.",
+    "source": "sample.pdf"
+  }
+]

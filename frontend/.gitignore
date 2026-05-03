@@ -1,0 +1,50 @@
+# .gitignore
+
+# ── Secrets ─────────────────────────────────────────────────────────────────
+.env
+*.pem
+*.key
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# ── Data / Vector store ──────────────────────────────────────────────────────
+# ChromaDB is rebuilt from PDFs on first run — do not commit the DB
+chroma_db/
+# User-uploaded PDFs should not be committed
+uploaded_docs/
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+ingestion_log.json
+*.log
+
+# ── Eval artifacts ───────────────────────────────────────────────────────────
+# Eval results CSVs and raw run logs (commit only the README summary table)
+eval/results/
+
+# ── Frontend ─────────────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+*.local
+
+# ── OS / Editor ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ── Docker ───────────────────────────────────────────────────────────────────
+# Keep Dockerfile and docker-compose in version control — they're deployment docs
+# But exclude any locally-built image tarballs
+*.tar

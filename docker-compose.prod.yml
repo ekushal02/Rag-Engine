@@ -1,0 +1,36 @@
+# docker-compose.prod.yml  — copy this to your EC2 instance
+version: "3.9"
+
+services:
+
+  backend:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/rag-engine-backend:latest
+    container_name: rag-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - chroma_data:/app/chroma_db
+      - upload_data:/app/uploaded_docs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  frontend:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/rag-engine-frontend:latest
+    container_name: rag-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
+  upload_data:

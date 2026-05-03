@@ -1,3 +1,31 @@
+# rag-engine/.gitignore
+
+# Python
 venv/
-.env
 __pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment
+.env
+!.env.example
+
+# Data — never commit user uploads or vector DB to git
+backend/chroma_db/
+backend/uploaded_docs/
+backend/ingestion_log.json
+uploaded_docs/
+ingestion_log.json
+
+# Next.js
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/chroma_db/
