@@ -560,4 +560,4 @@ This is a portfolio project. Feel free to fork, extend, and share improvements!
 
 ---
 
-**Built with ❤️ by Kushal | Portfolio Project | May 2025**
+**Built by Kushal | Portfolio Project | May 2026**
