@@ -495,26 +495,6 @@ docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/rag-engine-fronten
 
 ---
 
-## 📝 Interview Talking Points
-
-**"I built a production-grade RAG system that demonstrates end-to-end ML engineering:"**
-
-1. **Intelligent Retrieval** — Query router automatically selects between direct search and HyDE+reranking based on complexity
-
-2. **Real-Time Streaming** — Token-by-token generation via Server-Sent Events for responsive UX
-
-3. **Citation System** — Every answer claim tagged with source file, page number, and relevance scores
-
-4. **Optimization** — Benchmarked with RAGAS framework; achieved 0.90 average score through parameter tuning
-
-5. **Security** — User API keys stored in browser sessionStorage, never on server; full TypeScript type safety
-
-6. **Docker Ready** — Multi-stage production builds (~500MB images) with health checks and graceful degradation
-
-7. **Trade-offs** — Chose Groq (free, fast) over OpenAI for generation; ChromaDB (local, persistent) over Pinecone; EC2 over Lambda (keeps cross-encoder warm)
-
----
-
 ## 🚀 Future Enhancements
 
 - [ ] User authentication (Auth0/Firebase)
