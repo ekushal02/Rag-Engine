@@ -122,7 +122,7 @@ Deployment:    Docker | Docker Compose | AWS EC2 + ECR (optional)
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/yourusername/rag-engine.git
+git clone https://github.com/ekushal02/rag-engine.git
 cd rag-engine
 
 # 2. Create Python virtual environment
@@ -159,7 +159,7 @@ open http://localhost:3000
 
 ```bash
 # 1. Clone and enter
-git clone https://github.com/yourusername/rag-engine.git
+git clone https://github.com/ekushal02/rag-engine.git
 cd rag-engine
 
 # 2. Create .env file
