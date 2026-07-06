@@ -6,6 +6,16 @@ A production-grade **Retrieval-Augmented Generation (RAG) system** that combines
 
 ---
 
+
+## 🎬 Demo
+
+![RAG Engine Demo](assets/demo.gif)
+
+> Upload a PDF → Ask a question → Watch the system route, retrieve, rerank, and stream a cited answer in real time.
+
+---
+
+
 ## 🎯 Overview
 
 This system answers questions about uploaded PDF documents with **cited sources**. Every claim in the answer is tagged `[C1]`, `[C2]`, etc. and linked to the exact source chunk with page numbers.
