@@ -5,24 +5,30 @@ import json
 import os
 import sys
 import time
+from collections import defaultdict
 from datetime import datetime
+from pathlib import Path
 
 from dotenv import load_dotenv
-
-load_dotenv()
-from collections import defaultdict
-
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-sys.path.append(".")
+load_dotenv()
 
-from datasets import Dataset
-from ragas import evaluate
-from ragas.metrics import (AnswerRelevancy, ContextPrecision, ContextRecall,
-                           Faithfulness)
+# Add backend to path so imports work from repo root
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
 
-from backend.generation.generator import generate
-from backend.retrieval.router import route_and_retrieve
+# These imports must come after load_dotenv() — retrieval.router builds a
+# module-level Groq client from GROQ_API_KEY at import time.
+from datasets import Dataset  # noqa: E402
+from generation.generator import generate  # noqa: E402
+from ragas import evaluate  # noqa: E402
+from ragas.metrics import (  # noqa: E402
+    AnswerRelevancy,
+    ContextPrecision,
+    ContextRecall,
+    Faithfulness,
+)
+from retrieval.router import route_and_retrieve  # noqa: E402
 
 TEST_SET_PATH = "eval_data/test_set.json"
 RESULTS_DIR = "eval/results"
@@ -260,9 +266,9 @@ def run_evaluation(config: dict, label: str):
 
 if __name__ == "__main__":
     # Step 58: baseline evaluation at current defaults
-    baseline_config = {
+    final_config = {
         "chunk_size": 512,
-        "overlap": 64,
-        "k": 5,
+        "overlap": 32,
+        "k": 3,
     }
-    run_evaluation(baseline_config, label="baseline_512_64_k5")
+    run_evaluation(final_config, label="final_winner_512_32_k3")

@@ -4,8 +4,7 @@ from fastapi import APIRouter
 from ingestion.store import delete_document, get_collection, list_documents
 
 from ..dependencies import ingestion_status, set_status
-from ..models import (DeleteResponse, DocumentInfo, DocumentListResponse,
-                      IngestionStatus)
+from ..models import DeleteResponse, DocumentInfo, DocumentListResponse, IngestionStatus
 
 router = APIRouter()
 

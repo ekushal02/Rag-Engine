@@ -6,7 +6,7 @@ sys.path.append(".")
 
 from backend.ingestion.extractor import extract_text
 
-pages = extract_text("Transcripts.pdf")
+pages = extract_text("eval_data/nist_sp800-145.pdf")
 
 for p in pages:
     print(f"--- Page {p['page_number']} ---")

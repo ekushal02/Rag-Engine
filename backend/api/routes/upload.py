@@ -5,10 +5,10 @@ import os
 import shutil
 from functools import partial
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from ingestion.pipeline import ingest_document
 
-from ..dependencies import get_status, set_status
+from ..dependencies import get_status, resolve_openai_key, set_status
 from ..models import IngestionStatus, StatusResponse, UploadResponse
 
 router = APIRouter()
@@ -26,7 +26,10 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
         "(extract → chunk → embed → store), and returns the document ID and chunk count."
     ),
 )
-async def upload_document(file: UploadFile = File(...)):
+async def upload_document(
+    file: UploadFile = File(...),
+    openai_key: str = Depends(resolve_openai_key),
+):
     if not file.filename or not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are supported.")
 
@@ -45,7 +48,9 @@ async def upload_document(file: UploadFile = File(...)):
         # Run blocking ingestion in a thread pool so the event loop stays free.
         # asyncio.get_running_loop() is the correct API in Python 3.10+.
         loop = asyncio.get_running_loop()
-        result = await loop.run_in_executor(None, partial(ingest_document, save_path))
+        result = await loop.run_in_executor(
+            None, partial(ingest_document, save_path, openai_key=openai_key)
+        )
         set_status(doc_id, IngestionStatus.done)
         return UploadResponse(
             doc_id=result["source"],

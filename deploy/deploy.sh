@@ -1,9 +1,12 @@
 #!/bin/bash
 # deploy/deploy.sh
-# Usage: ./deploy/deploy.sh
-# Requires: AWS CLI configured, ECR repos created, .env on EC2
+# Usage: EC2_PUBLIC_IP=1.2.3.4 ./deploy/deploy.sh
+# Requires: AWS CLI configured, ECR repos created, .env on EC2,
+#           EC2_PUBLIC_IP exported (used to bake the frontend's API URL)
 
 set -euo pipefail
+
+: "${EC2_PUBLIC_IP:?Set EC2_PUBLIC_IP before running this script, e.g. EC2_PUBLIC_IP=1.2.3.4 ./deploy/deploy.sh}"
 
 AWS_REGION="us-east-1"                        # change to your region
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)

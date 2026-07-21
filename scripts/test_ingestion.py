@@ -4,6 +4,8 @@ import sys
 
 sys.path.append(".")
 
+from openai import OpenAI
+
 from backend.ingestion.logger import read_log
 from backend.ingestion.pipeline import ingest_document
 from backend.ingestion.store import get_collection, list_documents
@@ -11,7 +13,7 @@ from backend.ingestion.store import get_collection, list_documents
 PDF_FILES = [
     "eval_data/sample.pdf",
     "eval_data/sample2.pdf",
-    "eval_data/Transcripts.pdf",
+    "eval_data/nist_sp800-145.pdf",
 ]
 
 # --- Ingest all test documents ---
@@ -29,8 +31,6 @@ for doc in list_documents():
 
 # --- Run a test query against the collection ---
 print("\n--- Test retrieval ---")
-from openai import OpenAI
-
 client = OpenAI()
 
 test_query = "What is the main purpose of this document?"

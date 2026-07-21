@@ -7,7 +7,7 @@ sys.path.append(".")
 from backend.ingestion.chunker import chunk_text
 from backend.ingestion.extractor import extract_text
 
-pages = extract_text("eval_data/Transcripts.pdf")
+pages = extract_text("eval_data/nist_sp800-145.pdf")
 
 for chunk_size, overlap in [(256, 32), (512, 64), (1024, 128)]:
     chunks = chunk_text(

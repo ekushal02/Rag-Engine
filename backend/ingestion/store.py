@@ -1,8 +1,16 @@
 # backend/ingestion/store.py
 
+import os
+from pathlib import Path
+
 import chromadb
 
-CHROMA_PATH = "./chroma_db"  # local persistent storage
+# Anchored to this file's own location so the store resolves to the same
+# physical path regardless of the process's working directory (API server
+# runs from backend/, eval/test scripts run from the repo root).
+CHROMA_PATH = os.getenv(
+    "CHROMA_PATH", str(Path(__file__).resolve().parent / "chroma_db")
+)
 
 
 def get_client() -> chromadb.PersistentClient:

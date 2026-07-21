@@ -15,6 +15,7 @@ def ingest_document(
     chunk_overlap: int = 32,
     collection_name: str = "documents",
     replace_existing: bool = True,
+    openai_key: str | None = None,
 ) -> dict:
     """
     Full ingestion pipeline: PDF → chunks → embeddings → ChromaDB.
@@ -42,7 +43,7 @@ def ingest_document(
         print(f"  → {len(chunks)} chunks created")
 
         print("[3/4] Embedding chunks...")
-        embeddings = embed_chunks(chunks)
+        embeddings = embed_chunks(chunks, openai_key=openai_key)
         print(f"  → {len(embeddings)} embeddings generated")
 
         print("[4/4] Storing in ChromaDB...")

@@ -1,12 +1,15 @@
 # backend/ingestion/embedder.py
 
+import os
 import time
 
 from openai import OpenAI, RateLimitError
-from tenacity import (retry, retry_if_exception_type, stop_after_attempt,
-                      wait_exponential)
-
-client = OpenAI()
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 EMBEDDING_MODEL = "text-embedding-3-small"
 BATCH_SIZE = 100  # OpenAI allows up to 2048 inputs per request; 100 is safe
@@ -17,7 +20,7 @@ BATCH_SIZE = 100  # OpenAI allows up to 2048 inputs per request; 100 is safe
     wait=wait_exponential(multiplier=1, min=2, max=60),
     stop=stop_after_attempt(5),
 )
-def _embed_batch(texts: list[str]) -> list[list[float]]:
+def _embed_batch(texts: list[str], client: OpenAI) -> list[list[float]]:
     response = client.embeddings.create(
         input=texts,
         model=EMBEDDING_MODEL,
@@ -25,17 +28,25 @@ def _embed_batch(texts: list[str]) -> list[list[float]]:
     return [item.embedding for item in response.data]
 
 
-def embed_chunks(chunks: list[dict]) -> list[list[float]]:
+def embed_chunks(
+    chunks: list[dict], openai_key: str | None = None
+) -> list[list[float]]:
     """
     Takes list of chunk dicts, returns list of embedding vectors.
     Order is preserved — embeddings[i] corresponds to chunks[i].
+
+    openai_key: per-request key (e.g. from the X-OpenAI-Key header). Falls
+    back to the server's OPENAI_API_KEY env var if not provided, as a
+    documented local-dev convenience.
     """
+    client = OpenAI(api_key=openai_key or os.getenv("OPENAI_API_KEY"))
+
     texts = [c["text"] for c in chunks]
     all_embeddings: list[list[float]] = []
 
     for i in range(0, len(texts), BATCH_SIZE):
         batch = texts[i : i + BATCH_SIZE]
-        embeddings = _embed_batch(batch)
+        embeddings = _embed_batch(batch, client)
         all_embeddings.extend(embeddings)
         print(f"  Embedded batch {i // BATCH_SIZE + 1} ({len(batch)} chunks)")
 

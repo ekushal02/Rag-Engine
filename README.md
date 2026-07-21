@@ -1,32 +1,40 @@
 # RAG Document Intelligence Engine
 
-A production-grade **Retrieval-Augmented Generation (RAG) system** that combines intelligent query routing, HyDE retrieval, cross-encoder reranking, and real-time streaming generation. Built with FastAPI, Next.js, ChromaDB, and Groq LLaMA.
+A retrieval-augmented generation (RAG) system with LLM-based query routing, HyDE retrieval,
+cross-encoder reranking, and real-time streaming, citation-grounded answers. Built with FastAPI,
+Next.js, ChromaDB, OpenAI embeddings, and Groq LLaMA.
 
-**Status:** Fully functional, Docker-ready, RAGAS-evaluated, portfolio-grade.
+**Status:** Functional end-to-end (upload → route → retrieve → generate → cite), verified by
+manual testing and a real RAGAS evaluation run. Docker Compose configuration included; AWS
+EC2/ECR deployment scripts included for on-demand hosting (not continuously running, to avoid
+idle cost).
 
 ---
-
 
 ## 🎬 Demo
 
 ![RAG Engine Demo](assets/demo.gif)
 
-> Upload a PDF → Ask a question → Watch the system route, retrieve, rerank, and stream a cited answer in real time.
+---
+
+## Overview
+
+The system answers questions about uploaded PDFs with cited sources — every claim in an answer
+is tagged `[C1]`, `[C2]`, etc. and linked back to the exact source chunk, document, and page.
+
+**Query routing:** an LLM classifier (Groq LLaMA 3.3 70B) decides whether a question is simple
+or complex, and picks a retrieval strategy accordingly:
+- **Simple** → direct embedding search against ChromaDB
+- **Complex** → HyDE (generate a hypothetical answer, embed *that*, retrieve on it) followed by
+  cross-encoder reranking
+
+In testing, simple queries typically resolved in well under a second; complex queries (HyDE +
+rerank) typically took one to a few seconds, with the first call after a cold start slower while
+the reranker model loads.
 
 ---
 
-
-## 🎯 Overview
-
-This system answers questions about uploaded PDF documents with **cited sources**. Every claim in the answer is tagged `[C1]`, `[C2]`, etc. and linked to the exact source chunk with page numbers.
-
-**Key capability:** Automatically detects query complexity and routes to the optimal retrieval strategy:
-- **Simple queries** → Direct embedding search (fast, ~400ms)
-- **Complex queries** → HyDE + reranking (accurate, ~1300ms)
-
----
-
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -40,26 +48,25 @@ This system answers questions about uploaded PDF documents with **cited sources*
            ┌────────────┘         └──────────────┐
            │                                      │
     SIMPLE PATH                            COMPLEX PATH
-    (~400ms)                               (~1300ms)
            │                                      │
     ┌──────▼──────┐                    ┌─────────▼────────┐
     │   Embed     │                    │ HyDE Generator   │
     │  Question   │                    │ (Groq LLaMA)     │
     └──────┬──────┘                    └────────┬─────────┘
            │                                    │
-    ┌──────▼──────────────┐           ┌────────▼─────────┐
-    │ ChromaDB Vector     │           │ Embed Hypothetical
-    │ Search (k=8)        │           │ Answer            │
-    │ Cosine Similarity   │           └────────┬──────────┘
+    ┌──────▼──────────────┐           ┌────────▼──────────┐
+    │ ChromaDB Vector     │           │ Embed Hypothetical │
+    │ Search (top-k)      │           │ Answer             │
+    │ Cosine Similarity   │           └────────┬───────────┘
     └──────┬──────────────┘                    │
            │                      ┌─────────────▼──────────┐
            │                      │ ChromaDB Vector Search │
-           │                      │ (k=24)                 │
+           │                      │ (wider top-k)          │
            │                      └─────────────┬──────────┘
            │                                    │
            │                      ┌─────────────▼──────────┐
-           │                      │ MS MARCO Reranker     │
-           │                      │ (Top 5)                │
+           │                      │ MS MARCO Cross-Encoder │
+           │                      │ Reranker (top 5)       │
            │                      └─────────────┬──────────┘
            │                                    │
            └────────────────┬───────────────────┘
@@ -72,482 +79,324 @@ This system answers questions about uploaded PDF documents with **cited sources*
                            │
                   ┌────────▼────────┐
                   │  Stream Tokens  │
-                  │  to Frontend    │
-                  │  (SSE)          │
+                  │  via SSE        │
                   └────────┬────────┘
                            │
               ┌────────────▼──────────────┐
-              │  Browser UI Renders       │
-              │  Answer with [C1] Badges  │
-              │  + Source Panel           │
+              │  Browser renders answer   │
+              │  with [C1] badges +       │
+              │  source panel             │
               └───────────────────────────┘
 ```
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Details |
-|---------|---------|
-| **Query Routing** | Automatic classification of simple vs complex queries via LLM |
-| **HyDE Retrieval** | Generates hypothetical answers to improve semantic search accuracy |
-| **Cross-Encoder Reranking** | Local MS MARCO MiniLM reranker for precise relevance scoring |
-| **Real-Time Streaming** | Token-by-token generation via Server-Sent Events (SSE) |
-| **Citation System** | Every answer claim tagged [C1], [C2], etc with source attribution |
-| **User API Keys** | Users bring their own OpenAI + Groq keys (sessionStorage, never on server) |
-| **Vector Persistence** | ChromaDB stores embeddings with metadata (source, page, chunk_index) |
-| **Docker Ready** | Multi-stage builds for lean ~500MB production images |
-| **RAGAS Evaluated** | Benchmarked with faithfulness, relevancy, and recall metrics |
-| **Type-Safe** | Full TypeScript frontend + Pydantic backend validation |
+|---|---|
+| Query Routing | LLM classifies each question as simple or complex and picks a retrieval strategy |
+| HyDE Retrieval | Generates a hypothetical answer and embeds it, improving recall on complex questions |
+| Cross-Encoder Reranking | Local MS MARCO MiniLM-L-6-v2 reranker scores (query, chunk) pairs directly |
+| Real-Time Streaming | Token-by-token generation via Server-Sent Events |
+| Citation System | Every claim tagged `[C1]`/`[C2]`/etc., resolved back to source file, page, and chunk text |
+| Per-Request API Keys | Frontend collects OpenAI + Groq keys in `sessionStorage` and sends them as request headers on every call, including document upload/ingestion |
+| Vector Persistence | ChromaDB stores embeddings with source/page/chunk metadata, path anchored to the module's own location (consistent regardless of working directory) |
+| Docker Ready | Multi-stage builds for backend and frontend |
+| RAGAS Evaluated | Faithfulness, answer relevancy, context precision, context recall, measured against a fixed 25-question test set |
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ```
-Frontend:      Next.js 16 | TypeScript | Tailwind CSS | React 18
-Backend:       FastAPI | Python 3.11 | LangChain | Pydantic
+Frontend:      Next.js | TypeScript | Tailwind CSS | React
+Backend:       FastAPI | Python 3.11 | Pydantic
 Vector DB:     ChromaDB (local, persisted)
 Embeddings:    OpenAI text-embedding-3-small
-LLM:           Groq llama-3.3-70b-versatile (free)
-Reranker:      sentence-transformers (MS MARCO MiniLM-L-6-v2)
-Evaluation:    RAGAS (faithfulness, relevancy, recall)
-Deployment:    Docker | Docker Compose | AWS EC2 + ECR (optional)
+LLM:           Groq llama-3.3-70b-versatile
+Reranker:      sentence-transformers (cross-encoder/ms-marco-MiniLM-L-6-v2)
+Evaluation:    RAGAS (faithfulness, answer relevancy, context precision, context recall)
+Deployment:    Docker | Docker Compose | AWS EC2 + ECR (deploy scripts included, on-demand)
 ```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
+- Python 3.11+
+- Node.js 20+
+- OpenAI API key (https://platform.openai.com/api-keys)
+- Groq API key, free tier (https://console.groq.com/keys) — note the free tier has a
+  **100,000 tokens/day** cap, which is enough for normal use and demoing but will rate-limit a
+  large evaluation run; see [Evaluation Results](#evaluation-results) below.
 
-- **Python 3.11+**
-- **Node.js 20+**
-- **Docker** (optional, for containerized setup)
-- **API Keys:**
-  - OpenAI: https://platform.openai.com/api-keys (free tier: $5 credit)
-  - Groq: https://console.groq.com/keys (free tier: 30 requests/minute)
-
-### Option 1: Direct Local Setup (Recommended for Development)
+### 1. Clone and set up the backend
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/ekushal02/rag-engine.git
-cd rag-engine
+git clone https://github.com/ekushal02/Rag-Engine.git
+cd Rag-Engine
 
-# 2. Create Python virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate          # Windows: venv\Scripts\activate
 
-# 3. Install backend dependencies
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
+```
 
-# 4. Create .env file with your API keys
+### 2. Add your API keys
+
+Create a `.env` file at the repo root:
+
+```bash
 cat > .env << EOF
 OPENAI_API_KEY=sk-proj-YOUR_KEY_HERE
 GROQ_API_KEY=gsk_YOUR_KEY_HERE
 EOF
+```
 
-# 5. Start backend server
-cd backend
-python main.py
-# Or: uvicorn api.main:app --reload --port 8000
-# ✓ Backend running on http://localhost:8000
-# ✓ Swagger UI at http://localhost:8000/docs
+### 3. Start the backend
 
-# 6. Open NEW terminal for frontend
+Either of these works:
+
+```bash
+cd backend && uvicorn api.main:app --reload
+```
+```bash
+python backend/main.py     # run from the repo root
+```
+
+Confirm it's up:
+```bash
+curl http://localhost:8000/health
+# {"status":"ok"}
+```
+
+Swagger UI: http://localhost:8000/docs
+
+### 4. Start the frontend (new terminal)
+
+```bash
 cd frontend
 npm install
 npm run dev
-# ✓ Frontend running on http://localhost:3000
-
-# 7. Open browser
-open http://localhost:3000
 ```
 
-### Option 2: Docker Compose (Production-like)
+Open http://localhost:3000
+
+### Docker Compose (alternative)
 
 ```bash
-# 1. Clone and enter
-git clone https://github.com/ekushal02/rag-engine.git
-cd rag-engine
-
-# 2. Create .env file
-cat > .env << EOF
-OPENAI_API_KEY=sk-proj-YOUR_KEY_HERE
-GROQ_API_KEY=gsk_YOUR_KEY_HERE
-EOF
-
-# 3. Build and start
 docker compose up --build
-
-# 4. Open http://localhost:3000
-# Backend: http://localhost:8000
-# Swagger: http://localhost:8000/docs
 ```
 
 ---
 
-## 📖 How to Use
+## API Endpoints
 
-1. **Upload a PDF** (left sidebar)
-   - Drag-drop or click to select
-   - System extracts text, chunks, embeds, and stores in ChromaDB
-   - Takes ~30 seconds for 50-page document
-
-2. **Ask a Question** (center)
-   - Type your question in the input box
-   - Press Enter or click "Ask"
-   - System routes to simple or complex path automatically
-
-3. **Review Answer with Citations** (center + right sidebar)
-   - Answer appears with inline `[C1]`, `[C2]` badges
-   - Click any badge to highlight source in right panel
-   - Panel shows: source file, page number, similarity score, rerank score
-
-4. **Example Questions**
-   - "What is S3?" (simple → direct retrieval)
-   - "Compare S3 Standard vs S3 Infrequent Access" (complex → HyDE + rerank)
-   - "What are the storage classes?" (simple)
-   - "How does IAM work?" (complex)
-
----
-
-## 🔌 API Endpoints
-
-### POST /upload
-Upload a PDF document.
-
+### `POST /upload`
 ```bash
 curl -X POST http://localhost:8000/upload \
   -F "file=@document.pdf" \
   -H "X-OpenAI-Key: sk-proj-..." \
   -H "X-Groq-Key: gsk_..."
 ```
-
-**Response:**
+Response:
 ```json
 {
   "doc_id": "document.pdf",
-  "pages": 46,
-  "chunk_count": 791,
-  "indexed_at": "2025-05-03T12:34:56Z"
+  "chunk_count": 26,
+  "pages": 5,
+  "status": "done"
 }
 ```
 
-### GET /documents
-List all uploaded documents.
+### `GET /documents`
+Lists all ingested documents with chunk counts.
 
-```bash
-curl http://localhost:8000/documents \
-  -H "X-OpenAI-Key: sk-proj-..." \
-  -H "X-Groq-Key: gsk_..."
-```
+### `POST /query`
+Non-streaming question answering; returns the full answer, citations, route taken, latency, and
+model used in a single response.
 
-### GET /query/stream
-Stream query results in real-time.
+### `GET /query/stream`
+Same pipeline, streamed token-by-token via Server-Sent Events, with a final `event: done` payload
+containing the full structured response (citations, route, latency, model).
 
-```bash
-curl -N http://localhost:8000/query/stream \
-  -G --data-urlencode "question=What is S3?" \
-  -H "X-OpenAI-Key: sk-proj-..." \
-  -H "X-Groq-Key: gsk_..."
-```
+### `DELETE /documents/{doc_id}`
+Removes all chunks belonging to a document.
 
-**Response (Server-Sent Events):**
-```
-data: "S3"
-data: " is"
-data: " Amazon's"
-...
-data: {"answer": "...", "citations": [...], "route_taken": "simple", "latency_ms": 412}
-```
-
-### DELETE /documents/{doc_id}
-Delete a document.
-
-```bash
-curl -X DELETE http://localhost:8000/documents/document.pdf \
-  -H "X-OpenAI-Key: sk-proj-..." \
-  -H "X-Groq-Key: gsk_..."
-```
-
-**Full API docs:** http://localhost:8000/docs (interactive Swagger UI)
+Full interactive docs: http://localhost:8000/docs
 
 ---
 
-## 📁 Project Structure
+## Configuration
+
+### Current best-performing configuration
+
+Based on evaluating two configurations against a fixed 25-question test set (see below):
+
+```
+chunk_size = 512
+chunk_overlap = 32
+k (simple path) = 3
+complex path retrieves max(3 × k, 15) chunks pre-rerank, reranked down to top 5
+```
+
+This was **not** an exhaustive parameter sweep — Groq's free-tier daily token cap (100,000
+tokens/day) meant a full grid search across chunk size × overlap × k values couldn't complete in
+a single day. What's reported here is a direct comparison between an untuned baseline and one
+tuned configuration, both run to completion. A broader sweep is a natural next step if pursued
+across multiple days to respect the rate limit.
+
+**This is currently a tested configuration, not a deployed default.** The live API still runs
+with `chunk_size=1024` (ingestion default) and `k=5` (query default) unless a caller explicitly
+overrides them — the 512/32/3 numbers above only apply when the evaluation scripts call the
+underlying functions directly. Aligning the API's defaults with the tested configuration is a
+known open item (see [Known Limitations](#known-limitations--honest-gaps)).
+
+### Model choices
+
+| Component | Model | Why |
+|---|---|---|
+| Embeddings | OpenAI `text-embedding-3-small` | Cheap, good quality, avoids re-embedding cost of switching models later |
+| Generation & routing | Groq `llama-3.3-70b-versatile` | Free tier, low latency |
+| Reranker | MS MARCO MiniLM-L-6-v2 (local) | Runs on CPU, no API cost, no data leaves the machine |
+
+---
+
+## Evaluation Results
+
+Evaluated with the RAGAS framework against a fixed 25-question test set (`eval_data/test_set.json`),
+covering two source documents: an 11-question set on a course syllabus (`sample.pdf`) and a
+12-question set on an AI-in-education research paper (`sample2.pdf`), plus 2 no-answer control
+questions. A third document (a public-domain NIST publication defining cloud computing) was
+ingested alongside these as additional index "noise" but isn't the source of any scored question.
+
+| Metric | Baseline (chunk=512, overlap=64, k=5) | Tuned (chunk=512, overlap=32, k=3)* |
+|---|---|---|
+| Faithfulness | 0.8133 | 0.9699 |
+| Answer Relevancy | 0.3895 | 0.5638 |
+| Context Precision | 0.3147 | 0.6864 |
+| Context Recall | 0.4800 | 0.8800 |
+| **Average** | **0.4994** | **0.7750** |
+
+\* *The tuned configuration was run twice (0.7863 and 0.7637 average) to check for run-to-run
+noise, since RAGAS uses an LLM (GPT-4.1-mini) as a judge and judge scoring is not perfectly
+deterministic between runs on identical inputs. The table above reports the average of both runs.
+The two runs stayed within about 0.02–0.03 of each other on every metric, which is worth knowing
+if this number is challenged: it isn't exact to four decimal places, it's a reasonable estimate.*
+
+Tuning chunk size, overlap, and retrieval depth improved the average RAGAS score by roughly
+**55%** over the untuned baseline (0.50 → 0.78) on this test set and corpus.
+
+**Important caveat:** this tuned configuration is currently only applied when the evaluation
+scripts (`eval/run_eval.py`, `eval/parameter_sweep.py`) call the ingestion/retrieval functions
+directly. The live API does **not** default to it — `POST /upload` still chunks at the pipeline's
+default `chunk_size=1024` (`backend/ingestion/pipeline.py`), and `POST /query` / `GET /query/stream`
+still default to `k=5` (`backend/api/models.py`, `backend/api/routes/query.py`), not `k=3`. If you
+upload and query through the running app right now without explicitly overriding these, you're
+getting the *un-tuned* defaults, not the config in the table above.
+
+Raw per-question logs and the running summary are in `eval/results/`:
+- `eval/results/summary_scores.csv` — appended row per evaluation run
+- `eval/results/run_*.csv` — per-question detail for each run
+
+**Reproducing this:**
+```bash
+python3 eval/run_eval.py           # runs whichever config is set as the default in the script
+python3 eval/parameter_sweep.py    # grid search across chunk_size × overlap × k (mind the daily token cap)
+```
+
+---
+
+## Security / API Key Handling
+
+- The frontend collects an OpenAI key and a Groq key from the user (`KeySetup.tsx`), stores them
+  in `sessionStorage` (cleared on tab close), and sends them as `X-OpenAI-Key` / `X-Groq-Key`
+  headers on every request — including document upload/ingestion, not just querying.
+- The backend also supports a server-side `.env` with the same two variables. If a request header
+  is present, it's used; if not, the server falls back to its own `.env` value. The server
+  currently requires these two environment variables to be set in order to start at all — so this
+  is a **per-request-key-first design with a local-dev server fallback**, not a deployment with
+  zero server-side credentials.
+- Uploaded PDFs and their embeddings are stored locally in ChromaDB; nothing is sent to third-party
+  analytics or logging services.
+
+---
+
+## Docker & Deployment
+
+### Local
+```bash
+docker compose up --build
+```
+
+### AWS EC2 + ECR
+Deployment scripts are included (`deploy/ec2_setup.sh`, `deploy/deploy.sh`,
+`docker-compose.prod.yml`) for pushing both images to ECR and running them on an EC2 instance.
+This isn't run continuously — it's spun up on demand for a live demo and torn down afterward to
+avoid idle EC2/storage costs.
+
+```bash
+export EC2_PUBLIC_IP=<your-instance-ip>
+./deploy/deploy.sh
+```
+
+---
+
+## Known Limitations / Honest Gaps
+
+- The parameter search above compares two configurations, not an exhaustive grid — see
+  [Configuration](#configuration).
+- RAGAS's LLM-judge scoring has measurable run-to-run variance (~0.02–0.03 per metric on identical
+  inputs); treat any single run's numbers as an estimate, not an exact figure.
+- The server still requires its own `.env` keys to start (see [Security](#security--api-key-handling));
+  it isn't yet a true zero-server-credential deployment.
+- Groq's free tier (100,000 tokens/day) is the binding constraint on how much evaluation can be
+  run per day — a paid tier would remove this ceiling.
+- **The live API's defaults don't match the tested "best" configuration.** `POST /upload` chunks
+  at `chunk_size=1024` and querying defaults to `k=5`; the 0.78-average result was measured at
+  `chunk_size=512, k=3`, which currently only gets applied via the eval scripts, not through the
+  running app. Until the API's defaults are updated to match, the RAGAS numbers above describe a
+  configuration you have to opt into explicitly, not what a fresh clone does out of the box.
+
+---
+
+## Project Structure
 
 ```
 rag-engine/
-│
 ├── backend/
-│   ├── api/
-│   │   ├── main.py                 # FastAPI application
-│   │   ├── models.py               # Pydantic request/response schemas
-│   │   ├── dependencies.py         # Dependency injection (API key resolution)
-│   │   └── routes/
-│   │       ├── upload.py           # POST /upload
-│   │       ├── query.py            # GET /query/stream
-│   │       └── documents.py        # GET/DELETE /documents
-│   │
-│   ├── generation/
-│   │   ├── generator.py            # Token streaming via Groq
-│   │   ├── prompts.py              # System prompts for LLM
-│   │   └── schema.py               # RAGResponse dataclass
-│   │
-│   ├── retrieval/
-│   │   ├── router.py               # Query classification (simple/complex)
-│   │   ├── retriever.py            # ChromaDB vector search
-│   │   ├── hyde.py                 # HyDE hypothetical answer generation
-│   │   └── reranker.py             # MS MARCO cross-encoder reranking
-│   │
-│   ├── ingestion/
-│   │   ├── pipeline.py             # Full document ingestion pipeline
-│   │   ├── extractor.py            # PyMuPDF text extraction
-│   │   ├── chunker.py              # LangChain recursive chunking
-│   │   ├── embedder.py             # OpenAI embeddings with batching
-│   │   ├── store.py                # ChromaDB persistence
-│   │   └── logger.py               # Ingestion event logging
-│   │
-│   ├── Dockerfile                  # Multi-stage production image
-│   ├── requirements.txt            # Python dependencies
-│   └── main.py                     # Entry point
-│
+│   ├── api/               # FastAPI app, routes, models, dependency injection
+│   ├── generation/        # Groq-based generation + streaming + citation parsing
+│   ├── retrieval/         # Router, direct retriever, HyDE, cross-encoder reranker
+│   ├── ingestion/         # PDF extraction, chunking, embedding, ChromaDB storage
+│   ├── requirements.txt
+│   └── main.py
 ├── frontend/
-│   ├── app/
-│   │   ├── chat/page.tsx           # Main chat interface
-│   │   ├── layout.tsx              # Root layout wrapper
-│   │   ├── page.tsx                # Redirect to /chat
-│   │   └── globals.css             # Global styles
-│   │
-│   ├── components/
-│   │   ├── KeySetup.tsx            # API key entry screen (sessionStorage)
-│   │   ├── AnswerDisplay.tsx       # Rendered answer with citations
-│   │   ├── SourcesPanel.tsx        # Citation sources sidebar
-│   │   ├── DocumentList.tsx        # Uploaded documents list
-│   │   └── UploadZone.tsx          # Drag-drop PDF upload
-│   │
-│   ├── lib/
-│   │   ├── api.ts                  # API client (auto-adds auth headers)
-│   │   └── utils.ts                # Utility functions
-│   │
-│   ├── types/
-│   │   └── index.ts                # TypeScript type definitions
-│   │
-│   ├── Dockerfile                  # Multi-stage production image
-│   ├── next.config.ts              # Next.js config (standalone output)
-│   ├── package.json                # Node dependencies
-│   ├── tsconfig.json               # TypeScript config
-│   └── tailwind.config.ts          # Tailwind CSS config
-│
+│   ├── app/                # chat page, layout
+│   ├── components/         # KeySetup, AnswerDisplay, SourcesPanel, DocumentList, UploadZone
+│   ├── lib/api.ts           # API client (attaches auth headers)
+│   └── types/
 ├── eval/
-│   ├── run_eval.py                 # RAGAS evaluation script
-│   ├── parameter_sweep.py          # Grid search over chunk configs
+│   ├── run_eval.py
+│   ├── parameter_sweep.py
 │   └── results/
-│       ├── summary_scores.csv      # Benchmarked results table
-│       └── run_*.csv               # Individual experiment logs
-│
-├── scripts/
-│   ├── test_chunker.py             # Unit tests
-│   ├── test_embedder.py
-│   ├── test_extractor.py
-│   ├── test_generation.py
-│   ├── test_ingestion.py
-│   ├── test_retrieval.py
-│   ├── test_router.py
-│   └── test_streaming.py
-│
-├── docker-compose.yml              # Local dev environment
-├── docker-compose.prod.yml         # AWS production environment
-├── .env.example                    # Template (copy to .env)
-├── .gitignore                      # Git exclusions
-└── README.md                       # This file
+├── eval_data/               # test_set.json + source PDFs
+├── scripts/                 # unit/integration test scripts
+├── deploy/                  # EC2 setup + deploy scripts
+├── docker-compose.yml
+├── docker-compose.prod.yml
+└── .env.example
 ```
 
 ---
 
-## ⚙️ Configuration
+## License
 
-### Winning Parameters (Benchmarked)
-
-These values were validated with RAGAS and are production-ready:
-
-```python
-# backend/retrieval/router.py
-SIMPLE_RETRIEVE_K = 8           # Direct retrieval top-k
-COMPLEX_RETRIEVE_K = 24         # HyDE retrieval top-k before reranking
-RERANK_TOP_N = 5                # Final reranked results
-
-# backend/ingestion/chunker.py
-CHUNK_SIZE = 1024               # Characters per chunk
-CHUNK_OVERLAP = 32              # Character overlap between chunks
-```
-
-### Model Selection
-
-| Component | Model | Reason |
-|-----------|-------|--------|
-| **Embeddings** | OpenAI text-embedding-3-small | High quality, low cost ($0.02/1M tokens) |
-| **Generation** | Groq llama-3.3-70b-versatile | Free, fast (inference in 400-1300ms) |
-| **Reranker** | MS MARCO MiniLM (local) | ~1.5GB, runs locally, prevents API calls |
-
-### API Costs (Monthly Estimate)
-
-```
-OpenAI Embeddings:
-  - 50 documents × 100 chunks × 500 tokens = 2.5M tokens
-  - Cost: 2.5M × $0.02 / 1M = ~$0.05
-
-Groq LLaMA:
-  - Free tier: 30 requests/minute
-  - Free tier cost: $0
-
-AWS (if deploying):
-  - EC2 t3.medium: ~$30/month (when running)
-  - Data transfer: ~$0.09/GB
-  
-Total: $0.05/month (local) | $30-40/month (AWS)
-```
+MIT.
 
 ---
 
-## 📊 Evaluation Results
+**Built by Kushal Erramilli | Portfolio project | Last updated July 2026**
 
-Validated with **RAGAS framework** on AWS Certified Solutions Architect slides (46 pages, 791 chunks).
-
-```
-Metric                  Score    Interpretation
-─────────────────────────────────────────────────
-Faithfulness            0.92     Claims closely match source material
-Answer Relevancy        0.88     Answers directly address queries
-Context Precision       0.91     Retrieved chunks are on-topic
-Context Recall          0.89     All necessary information retrieved
-─────────────────────────────────────────────────
-Average                 0.90     Production-grade quality
-```
-
-**Configuration:** chunk_size=1024, overlap=32, k=8 (simple), k=24 (complex), rerank_top=5
-
-See `eval/results/summary_scores.csv` for detailed experiment logs.
-
----
-
-## 🔐 Security
-
-✅ **No Server-Side Key Storage**
-- User API keys stored in browser `sessionStorage` only
-- Keys sent as request headers (`X-OpenAI-Key`, `X-Groq-Key`)
-- Server never persists or logs keys
-
-✅ **Per-User Authentication**
-- Each user brings their own OpenAI + Groq keys
-- Keys are isolated per session
-- Session clears on tab close
-
-✅ **No Data Leakage**
-- Uploaded PDFs stored locally in ChromaDB
-- No external logging or telemetry
-- No third-party analytics
-
-✅ **Defensive Streaming**
-- Guards against Groq edge cases (empty choices, None content)
-- Proper error handling and timeouts
-- Graceful degradation on API failures
-
----
-
-## 🐳 Docker & Deployment
-
-### Local Docker Compose
-
-```bash
-docker compose up --build
-# ✓ Backend: http://localhost:8000
-# ✓ Frontend: http://localhost:3000
-```
-
-### Production: AWS EC2 + ECR
-
-**1. Create ECR repositories:**
-```bash
-aws ecr create-repository --repository-name rag-engine-backend --region us-east-1
-aws ecr create-repository --repository-name rag-engine-frontend --region us-east-1
-```
-
-**2. Push Docker images:**
-```bash
-export AWS_ACCOUNT_ID=123456789012
-export AWS_REGION=us-east-1
-
-aws ecr get-login-password --region $AWS_REGION | \
-  docker login --username AWS --password-stdin \
-  $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-
-docker tag rag-engine-backend:latest \
-  $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/rag-engine-backend:latest
-docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/rag-engine-backend:latest
-
-docker tag rag-engine-frontend:latest \
-  $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/rag-engine-frontend:latest
-docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/rag-engine-frontend:latest
-```
-
-**3. Launch EC2 & deploy:**
-```bash
-# Launch t3.medium Ubuntu 24.04 instance
-# Update docker-compose.prod.yml with your account ID
-# SCP files to EC2
-# Run: docker compose -f docker-compose.prod.yml up -d
-```
-
-**Cost:** ~$30-40/month (EC2) + OpenAI usage (user-provided keys)
-
----
-
-## 🚀 Future Enhancements
-
-- [ ] User authentication (Auth0/Firebase)
-- [ ] Payment processing (Stripe) for public SaaS model
-- [ ] Rate limiting and quota management per user
-- [ ] HTTPS, custom domain, DNS routing
-- [ ] Advanced analytics (query latency heatmap, cost attribution)
-- [ ] Multi-document Q&A (cross-document reasoning)
-- [ ] Fine-tuned reranker on proprietary data
-- [ ] Mobile app (React Native)
-
----
-
-## 📚 Resources
-
-- **Groq API Docs:** https://console.groq.com/docs/
-- **OpenAI Embeddings:** https://platform.openai.com/docs/guides/embeddings
-- **ChromaDB:** https://docs.trychroma.com/
-- **RAGAS:** https://docs.ragas.io/
-- **LangChain:** https://python.langchain.com/
-
----
-
-## 📄 License
-
-MIT — Free to use, modify, and distribute.
-
----
-
-## 🤝 Contributing
-
-This is a portfolio project. Feel free to fork, extend, and share improvements!
-
----
-
-## 💬 Questions?
-
-1. **How to run?** → See [Quick Start](#-quick-start)
-2. **API docs?** → http://localhost:8000/docs
-3. **How does routing work?** → See [Architecture](#-architecture)
-4. **What are the costs?** → See [Configuration](#-configuration)
-5. **How to deploy?** → See [Docker & Deployment](#-docker--deployment)
-
----
-
-**Built by Kushal | Portfolio Project | May 2026**

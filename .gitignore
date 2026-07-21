@@ -12,7 +12,10 @@ __pycache__/
 !.env.example
 
 # Data — never commit user uploads or vector DB to git
+# canonical ChromaDB location is backend/ingestion/chroma_db/ (see CHROMA_PATH)
+chroma_db/
 backend/chroma_db/
+backend/ingestion/chroma_db/
 backend/uploaded_docs/
 backend/ingestion_log.json
 uploaded_docs/
@@ -28,4 +31,4 @@ frontend/out/
 
 # Editor
 .vscode/
-.idea/chroma_db/
+.idea/

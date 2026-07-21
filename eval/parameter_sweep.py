@@ -1,19 +1,22 @@
 # eval/parameter_sweep.py
 
-import json
 import sys
 import time
+from pathlib import Path
 
-sys.path.append(".")
+# Add backend to path so imports work from repo root
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
 
-from backend.ingestion.pipeline import ingest_document
-from backend.ingestion.store import list_documents
+from ingestion.pipeline import ingest_document
+
+# Now import eval module by adding its parent (repo root) to path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from eval.run_eval import run_evaluation
 
 DOCUMENTS_TO_INGEST = [
     "eval_data/sample.pdf",
     "eval_data/sample2.pdf",
-    "eval_data/Transcripts.pdf",
+    "eval_data/nist_sp800-145.pdf",
 ]
 
 # 3 chunk sizes × 2 overlaps × 3 k values = 18 configurations
