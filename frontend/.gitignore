@@ -30,6 +30,21 @@ ingestion_log.json
 # ── Eval artifacts ───────────────────────────────────────────────────────────
 # Eval results CSVs and raw run logs (commit only the README summary table)
 eval/results/
+# Resumability checkpoints (per-question pipeline outputs, RAGAS scores,
+# sweep state, completion markers) — these are local run state, not source
+# code, and can be large/numerous across a full parameter sweep. Re-running
+# regenerates them from scratch, so nothing is lost by excluding them.
+eval/checkpoints/
+# Leftover atomic-write temp files if a checkpoint write was interrupted
+# mid-save (checkpoint_utils.py writes to *.tmp then renames — a crash
+# before the rename can leave one of these behind).
+*.json.tmp
+
+# ── Eval source documents ───────────────────────────────────────────────────
+# The AWS Certified Cloud Practitioner deck is licensed course material
+# marked "NOT FOR DISTRIBUTION" — keep it local only, never push it.
+# (test_set.json itself is fine to commit — it's your own Q&A pairs.)
+eval_data/AWS_Certified_Cloud_Practitioner.pdf
 
 # ── Frontend ─────────────────────────────────────────────────────────────────
 node_modules/

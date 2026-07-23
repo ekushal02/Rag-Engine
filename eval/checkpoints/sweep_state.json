@@ -1,0 +1,12 @@
+{
+  "last_ingested": {
+    "chunk_size": 512,
+    "overlap": 32,
+    "documents_done": [
+      "eval_data/AWS_Certified_Cloud_Practitioner.pdf",
+      "eval_data/Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf",
+      "eval_data/Subclass_500_Student_visa.pdf"
+    ]
+  },
+  "completed_configs": {}
+}
