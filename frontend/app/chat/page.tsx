@@ -11,14 +11,6 @@ import { queryStream, listDocuments, hasKeys, clearStoredKeys } from "@/lib/api"
 import KeySetup from "@/components/KeySetup"
 import { Citation, DocumentInfo, QueryResponse, UploadResponse } from "@/types"
 
-const EXAMPLE_QUESTIONS = [
-  "What is S3?",
-  "Compare S3 Standard vs S3 Infrequent Access",
-  "What is the max object size in S3?",
-  "What are the S3 storage classes?",
-  "How does IAM work in AWS?",
-]
-
 interface Message {
   id: string
   question: string
@@ -113,7 +105,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
 
       {/* ── Header ── */}
       <header className="bg-white border-b border-gray-200 px-6 py-3 flex-shrink-0">
@@ -196,25 +188,6 @@ export default function ChatPage() {
                 }}
               />
             )}
-          </div>
-
-          {/* Example questions */}
-          <div className="p-4 border-t border-gray-100">
-            <h2 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">
-              Example questions
-            </h2>
-            <ul className="space-y-2">
-              {EXAMPLE_QUESTIONS.map((q) => (
-                <li key={q}>
-                  <button
-                    onClick={() => setQuestion(q)}
-                    className="text-xs text-left text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors w-full leading-snug px-2 py-1.5 rounded-lg"
-                  >
-                    {q}
-                  </button>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Pipeline info */}
