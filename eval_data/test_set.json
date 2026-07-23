@@ -1,98 +1,333 @@
 [
   {
-    "question": "What is the final project due date for DATA 606?",
-    "ground_truth": "The final project is due on Sunday, December 8.",
-    "source": "sample.pdf"
+    "question": "How long can a Subclass 500 Student visa holder stay in Australia?",
+    "ground_truth": "Up to 6 years, in line with the length of your enrolment. Primary school children starting in years 1-4 are generally only granted a maximum of 3 years.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What percentage of the grade is based on project success?",
-    "ground_truth": "Project success accounts for 40% of the final grade.",
-    "source": "sample.pdf"
+    "question": "What is the base cost of a Subclass 500 Student visa application?",
+    "ground_truth": "The visa costs from AUD2,500.00 for the main applicant, though concessions apply in limited circumstances (e.g. eligible Pacific Island, Timor-Leste and ASEAN citizens).",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What are the GitHub file naming conventions required for DATA 606?",
-    "ground_truth": "The required GitHub file naming conventions are: draft proposal as draft_proposal.md, final proposal as final_proposal.md, project presentation as capstone.pptx, and project report as report.md.",
-    "source": "sample.pdf"
+    "question": "How many hours per fortnight can a Student visa holder work while their course is in session?",
+    "ground_truth": "Up to 48 hours a fortnight while the course of study or training is in session. Students studying a master's degree by research or a doctoral degree, and their families, have no work-hour limit.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What are the three main phases of the DATA 606 course?",
-    "ground_truth": "The three main phases of the course are Project Proposal and Approval, Data Preparation and EDA, and Model Training and Deployment.",
-    "source": "sample.pdf"
+    "question": "What health insurance must Student visa holders and their family members maintain?",
+    "ground_truth": "They must have and maintain Overseas Student Health Cover (OSHC) from an approved Australian provider for the whole stay, unless an exception applies (e.g. Norwegian students under the Norwegian National Insurance Scheme, Swedish students under Kammarkollegiet, or Belgian students under the Reciprocal Health Care Agreement).",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What is the policy on using AI tools like ChatGPT in DATA 606?",
-    "ground_truth": "Use of any artificial technical assistance such as ChatGPT or other generative technologies outside of onboard spellcheck and tools like Google Scholar is considered academic misconduct and is strictly forbidden. Students who violate this policy will receive a zero for that assignment or project.",
-    "source": "sample.pdf"
+    "question": "What is the minimum age to apply for a Subclass 500 Student visa?",
+    "ground_truth": "Applicants must be 6 years of age or older.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What percentage of the grade is based on punctuality?",
-    "ground_truth": "Punctuality accounts for 10% of the final grade.",
-    "source": "sample.pdf"
+    "question": "How much money must a student show for 12 months of living costs when applying for this visa, and what is the amount for an accompanying partner or child?",
+    "ground_truth": "The declared 12-month living costs are AUD29,710 for the student, AUD10,394 for an accompanying partner, and AUD4,449 for an accompanying child.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What deliverables are required for the final project in DATA 606?",
-    "ground_truth": "The required final deliverables are a project report in report.md format that includes links to the PPT and YouTube video, a project presentation in capstone.pptx format, and a project video uploaded to YouTube.",
-    "source": "sample.pdf"
+    "question": "What minimum parental or partner annual income is accepted as evidence of financial capacity for the visa?",
+    "ground_truth": "A personal annual income of at least AUD87,856 in the 12 months before applying is accepted; if family members are also included, the required income rises to at least AUD102,500.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What grading scale is used in DATA 606?",
-    "ground_truth": "The grading scale is: 85-100% is an A, 70-84% is a B, 55-69% is a C, 40-54% is a D, and below 40% is an F.",
-    "source": "sample.pdf"
+    "question": "Which Ministerial Direction applies to Student visa applications lodged outside Australia after 14 November 2025?",
+    "ground_truth": "Applications lodged on or after 14 November 2025 are processed according to Ministerial Direction 115. Applications lodged before that date follow Ministerial Direction 111.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "Are students allowed to work in teams for the capstone project?",
-    "ground_truth": "Individual capstone projects are encouraged, but students may work in small teams of two to three participants depending on the complexity of the project.",
-    "source": "sample.pdf"
+    "question": "What welfare arrangement options are available for a Student visa applicant under 18 years old?",
+    "ground_truth": "An under-18 applicant can arrange a Confirmation of Appropriate Accommodation and Welfare (CAAW), provide an Acceptance Advice of Secondary Exchange Student (AASES) form if on an exchange program, get Ministerial approval if sponsored by Foreign Affairs or Defence, or nominate a guardian using Form 157N.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What must students do if they cannot find a project idea for DATA 606?",
-    "ground_truth": "Students who cannot find a project idea should contact the instructor as soon as possible. The Data Science faculty may help with a list of possible projects aligned with the student's interests.",
-    "source": "sample.pdf"
+    "question": "Who is eligible to be nominated as a guardian for a Student visa applicant under 18?",
+    "ground_truth": "A nominated guardian must be the student's parent, a person who has custody of the student, or a relative aged 21 or older who is nominated in writing by a parent or person with custody.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "How many papers were reviewed in the AI in education study?",
-    "ground_truth": "A total of 100 papers were selected, including 63 empirical papers and 37 analytic papers.",
-    "source": "sample2.pdf"
+    "question": "Which form must be completed to give consent for an applicant under 18 to migrate to Australia?",
+    "ground_truth": "Form 1229, the consent form to grant an Australian visa to a child under the age of 18 years, or an equivalent statutory declaration, must be completed by each parent or legal guardian.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What are the four research trends identified in the AI education review?",
-    "ground_truth": "The four research trends identified are Internet of Things, swarm intelligence, deep learning and neurocomputation, and evaluation of AI in education.",
-    "source": "sample2.pdf"
+    "question": "What evidence can be provided instead of a Confirmation of Enrolment (CoE)?",
+    "ground_truth": "A CoE is not required if the applicant is on an Australian-Government-approved scholarship (a letter of support suffices), sponsored by the Department of Defence (a letter of support), a secondary exchange student (an AASES form), or a postgraduate research student staying to have their thesis marked (a letter from the education provider).",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What database was used to search for papers in the AI education review?",
-    "ground_truth": "The Web of Science database and the Social Science Citation Index (SSCI) journals were used to search for papers published from 2010 to 2020.",
-    "source": "sample2.pdf"
+    "question": "What is the rule about gaps between courses in a packaged Student visa application?",
+    "ground_truth": "Course gaps must be less than two calendar months, unless the first course finishes at the end of the standard academic year and the next course starts at the beginning of the next standard academic year, in which case a three-to-four month gap is acceptable.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What is adaptive learning according to the AI education paper?",
-    "ground_truth": "Adaptive learning is a formative and corrective automated system that adjusts itself to suit individual learners' characteristics, needs, and preferences. Unlike feedback systems that offer stock responses, the adaptive system personalizes the learning experience.",
-    "source": "sample2.pdf"
+    "question": "Name some visa subclasses that a person cannot hold if they want to apply for a Student visa while in Australia.",
+    "ground_truth": "A person cannot apply for a Student visa onshore if they hold, among others, a Temporary Graduate visa (subclass 485), a Visitor visa (subclass 600), an Electronic Travel Authority (subclass 601), a Medical Treatment visa (subclass 602), an eVisitor visa (subclass 651), a Transit visa (subclass 771), a Maritime Crew visa (subclass 988), or (as the primary holder) a Diplomatic (Temporary) visa (subclass 995).",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What are the three categories of challenges AI faces in education?",
-    "ground_truth": "The three categories of challenges are: technique challenges, challenges related to the changing roles of teachers and students, and social and ethical issues.",
-    "source": "sample2.pdf"
+    "question": "What is the difference between a Bridging visa A and a Bridging visa B for a Student visa applicant?",
+    "ground_truth": "A Bridging visa A (BVA) starts automatically if the applicant's substantive visa expires while their new application is being processed, but it does not allow travel and cancels on departure. A Bridging visa B (BVB) can be granted for substantial travel reasons and allows the holder to return to Australia while their application is being processed.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What is the difference between feedback and adaptive learning in AI education systems?",
-    "ground_truth": "Feedback systems offer stock responses to learners based on their input, while adaptive learning systems are formative and corrective, automatically adjusting content, pace, and support to suit individual learner characteristics, needs, and preferences.",
-    "source": "sample2.pdf"
+    "question": "What are the age limits for school students starting each year level under this visa?",
+    "ground_truth": "School students must be less than 17 years old when starting Year 9, less than 18 when starting Year 10, less than 19 when starting Year 11, and less than 20 when starting Year 12.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What three dimensions were used to classify research questions in the AI education review?",
-    "ground_truth": "The three dimensions used to classify research questions were: the dimension of development (focusing on knowledge presentation models), the dimension of extraction (centering on how to obtain knowledge from data mining), and the dimension of application (emphasizing human-computer interaction).",
-    "source": "sample2.pdf"
+    "question": "How recent must an English language test be when a Student visa applicant provides evidence of English proficiency?",
+    "ground_truth": "The test must have been completed within the 2 years before lodging the visa application if the applicant is at the Regular Evidence level, or within the 2 years before a decision is made if the applicant is at the Streamlined Evidence level and the Department has requested evidence.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "How many empirical studies focused on feedback in the AI education review?",
-    "ground_truth": "16 empirical studies focused on feedback.",
-    "source": "sample2.pdf"
+    "question": "Does the Department of Home Affairs accept at-home or fully online English language tests for a Student visa application?",
+    "ground_truth": "No. The Department does not accept English tests delivered entirely online (\"remote-proctored\" or \"at-home\"), such as IELTS Online, LANGUAGECERT Academic Online, OET@Home, CELPIP Online, MET Digital taken at-home, or the TOEFL iBT Home Edition.",
+    "source": "Subclass_500_Student_visa.pdf"
   },
   {
-    "question": "What ethical concerns about student data does the paper raise?",
-    "ground_truth": "The paper raises concerns that individual student data may be exposed, shared, or used inappropriately, and that educators and AI engineers must carefully consider how they access, evaluate, and share big data and the results of data analysis.",
-    "source": "sample2.pdf"
+    "question": "Give some examples of applicants who are exempt from providing English language test evidence for a Student visa.",
+    "ground_truth": "Exemptions include citizens holding a passport from the UK, USA, Canada, New Zealand, or Ireland; Foreign Affairs or Defence sponsored students; secondary exchange students; those enrolled in a registered school course or a standalone ELICOS course; those whose principal course is delivered in a language other than English; postgraduate research students; and those who have completed at least 5 years of study in English in specified countries.",
+    "source": "Subclass_500_Student_visa.pdf"
+  },
+  {
+    "question": "What is the minimum IELTS Academic score required for a Student visa for tests taken on or after 7 August 2025?",
+    "ground_truth": "A minimum overall IELTS Academic score of 6.0 is required, reduced to 5.5 if the principal course is packaged with at least 10 weeks of ELICOS (or an eligible Foundation/Pathway program), or 5.0 if packaged with at least 20 weeks of ELICOS.",
+    "source": "Subclass_500_Student_visa.pdf"
+  },
+  {
+    "question": "How much money should an applicant budget for travel costs when calculating their visa financial requirements?",
+    "ground_truth": "As a guide: AUD2,500 for applicants from East or Southern Africa, AUD3,000 for applicants from West Africa, AUD2,000 for applicants from anywhere else outside Australia, and AUD1,000 for applicants already in Australia (AUD1,500 if they will be returning to Africa).",
+    "source": "Subclass_500_Student_visa.pdf"
+  },
+  {
+    "question": "Which Student visa applicants are exempt from paying the visa application charge (VAC)?",
+    "ground_truth": "Exempt applicants include those on a scholarship funded by the Commonwealth Government of Australia, students and family members supported by the Department of Foreign Affairs and Trade or Department of Defence, secondary exchange students, students affected by an education provider default who reapply within 12 months, family members of students in a postgraduate research course, and students affected by COVID-19 disruptions.",
+    "source": "Subclass_500_Student_visa.pdf"
+  },
+  {
+    "question": "How many complete survey responses did the Danish GenAI research-practices study receive, and what was the response rate?",
+    "ground_truth": "The study received 2,534 complete responses out of 29,498 invitations, an 8.6% response rate, plus 533 partial responses (1.8%).",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Over what period, and among whom, was the GenAI research-practices survey conducted?",
+    "ground_truth": "The survey was fielded to researchers, including PhD students, at all eight Danish universities, running from January 22, 2024 until February 26, 2024, with one invitation and two reminders sent out.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "What three clusters of GenAI perception did the factor analysis identify in the GenAI research-practices survey?",
+    "ground_truth": "The factor analysis identified three clusters: \"GenAI as a work horse,\" \"GenAI as a language assistant only,\" and \"GenAI as a research accelerator.\"",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How many respondents fell into the \"GenAI as a work horse\" cluster, and how did they view peer-review use of GenAI?",
+    "ground_truth": "This cluster contained 893 respondents (35.2%). They viewed using GenAI to create/edit code, support statistical analysis, and recognize patterns in data as good practice, but were more sceptical than the other clusters about using GenAI in the peer review process.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How many respondents fell into the \"GenAI as a language assistant only\" cluster, and what did they consider acceptable?",
+    "ground_truth": "This was the most sceptical cluster, with 609 respondents (24.0%). They mainly viewed language-related tasks positively, such as refining research proposal language, transcribing recordings, and formatting references, while finding data-analysis uses more problematic than the other clusters.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How large was Cluster 3, \"GenAI as a research accelerator,\" and how did this group generally view GenAI?",
+    "ground_truth": "Cluster 3 contained 1,032 researchers (40.7% of respondents), who were generally very positive about using GenAI across almost all use cases, particularly for data analysis and research design.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Which research tasks were assessed most positively and which were assessed most critically in terms of research integrity?",
+    "ground_truth": "Language editing and data-analysis tasks were generally viewed as good research practice, while designing experiments or theoretical frameworks and using GenAI during peer review were viewed as more problematic.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Which two use cases were the most controversial among survey respondents?",
+    "ground_truth": "Creating or modifying images/figures and generating synthetic datasets were the two most contentious use cases, with respondents noting these may carry different connotations across research fields.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Did the study find a difference in GenAI use or research-integrity assessment between men and women?",
+    "ground_truth": "No, the study found no significant differences in either GenAI use or research-integrity assessment between men and women.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How did GenAI usage differ between junior and senior researchers?",
+    "ground_truth": "Junior researchers used GenAI for more different purposes than their senior colleagues, even though their assessments of what counts as appropriate use were similar.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Which GenAI tool did most survey respondents have in mind when answering the survey, and what other tools were mentioned?",
+    "ground_truth": "Most respondents were thinking of ChatGPT (n = 1,550). Copilot (Microsoft and GitHub combined) was second (n = 176), followed by Grammarly (n = 101), Google's Bard (n = 76), Dall-E (n = 74), and DeepL (n = 69).",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How strong was the correlation between a use case's research-integrity assessment and how often it was actually used?",
+    "ground_truth": "There was a moderate positive correlation: Kendall's tau of .44 between assessment and respondents' own admitted use, and .5 between assessment and their colleagues' reported use.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How did humanities researchers compare to other fields in GenAI use and assessment?",
+    "ground_truth": "Humanities scholars reported using GenAI tools least frequently of all main research areas and gave the least positive research-integrity assessments; 19.3% of humanities respondents gave an overall assessment of 3 or less on the 7-point scale.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Which main research area had the highest aggregated research-integrity assessment of GenAI use?",
+    "ground_truth": "Respondents from the technical sciences had the highest aggregated research-integrity assessment of the 32 use cases, alongside a larger share reporting use of GenAI for many different use cases.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How did quantitative and qualitative social scientists differ in their GenAI use?",
+    "ground_truth": "Quantitative social scientists reported using GenAI tools for substantially more use cases than their qualitative social science colleagues, who in turn gave slightly lower research-integrity scores to GenAI use.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How many research phases and total GenAI use cases did the survey cover?",
+    "ground_truth": "The survey covered 32 GenAI use cases grouped into five research phases: idea generation, research design, data collection, data analysis, and writing/reporting.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How were the three academic-age categories (starting, consolidator, advanced) defined in the study?",
+    "ground_truth": "Researchers with a PhD awarded after 2016 were categorised as \"starting\", those with a PhD awarded between 2011 and 2016 as \"consolidator\", and those with a PhD awarded before 2011 as \"advanced\", roughly matching European Research Council grant levels.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How many researchers took part in the survey's pilot test before the full survey was sent out?",
+    "ground_truth": "200 researchers were randomly selected from the sample to take part in a pilot survey and flag any unclear phrasing or mistakes before the full survey was launched.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How many open-ended comments did the survey receive, and how many were coded as assessments of good or bad practice?",
+    "ground_truth": "The survey received 543 open-text comments (excluding 'no comment' responses), of which 182 were coded under the theme 'assessment of good or bad practice.'",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "What nine ethical principles did Ning et al. identify for a responsible GenAI framework in health care, as cited in this paper?",
+    "ground_truth": "The nine principles are accountability, autonomy, equity, integrity, non-maleficence, privacy, security, transparency, and trust.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "According to Gray's analysis cited in the paper, roughly how many LLM-assisted articles were estimated to have been published in 2023?",
+    "ground_truth": "Gray's quantitative analysis estimated that up to 85,000 LLM-assisted articles were published in 2023, with a noticeable increase within engineering and natural sciences.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "Which ethical considerations were prominent in respondents' comments, and which broader ethical principles were rarely mentioned?",
+    "ground_truth": "Respondents frequently raised concerns about accuracy, trustworthiness, and privacy in their comments. Broader ethical considerations such as social and climate justice, part of the wider responsible-GenAI framework the paper cites, were hardly explicitly touched upon by respondents.",
+    "source": "Generative_Artificial_Intelligence__GenAI__in_the_research_process.pdf"
+  },
+  {
+    "question": "How many availability zones does a typical AWS Region have?",
+    "ground_truth": "Each AWS Region typically has around 3 availability zones, with a minimum of 3 and a maximum of 6.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "Under the AWS Shared Responsibility Model, what is AWS responsible for versus the customer when using Amazon S3?",
+    "ground_truth": "AWS is responsible for guaranteeing unlimited storage, providing encryption capability, keeping customer data separated, and preventing AWS employees from accessing customer data. The customer is responsible for bucket configuration, bucket policy/public access settings, IAM users and roles, and enabling encryption.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What are the six pillars of the AWS Well-Architected Framework?",
+    "ground_truth": "The six pillars are Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What durability does Amazon S3 provide, and does it vary by storage class?",
+    "ground_truth": "Amazon S3 provides 99.999999999% durability (11 nines) across multiple availability zones, and this durability figure is the same for all S3 storage classes.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What availability does S3 Standard offer, and roughly how much annual downtime does that allow?",
+    "ground_truth": "S3 Standard offers 99.99% availability, which corresponds to roughly 53 minutes of unavailability per year.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What are the three main EC2 purchasing options and what kind of workload is each suited for?",
+    "ground_truth": "On-Demand Instances suit short, predictable workloads billed by the second; Reserved Instances (including Convertible Reserved Instances and Savings Plans) suit long-running workloads; and Spot Instances suit short, cost-sensitive workloads that can tolerate interruption, since AWS can reclaim the capacity.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "Under the AWS Business Support Plan, what is the guaranteed response time for a case where a production system is completely down?",
+    "ground_truth": "Under the Business Support Plan, a production-system-down case has a guaranteed response time of less than 1 hour.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "Is the AWS Basic Support Plan free, and what does it include?",
+    "ground_truth": "Yes, Basic Support is free. It includes 24x7 access to customer service, documentation, whitepapers, and support forums, access to the 7 core AWS Trusted Advisor checks, and the AWS Personal Health Dashboard.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What is the minimum storage duration for the Amazon S3 Glacier Deep Archive storage class?",
+    "ground_truth": "S3 Glacier Deep Archive has a minimum storage duration of 180 days, compared to 90 days for the other Glacier tiers.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What features can an IAM password policy in AWS enforce?",
+    "ground_truth": "An IAM password policy can set a minimum password length, require uppercase letters, lowercase letters, numbers and non-alphanumeric characters, allow users to change their own passwords, require periodic password expiration, and prevent password reuse.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What is the main benefit of enabling Multi-Factor Authentication (MFA) on an AWS account?",
+    "ground_truth": "The main benefit of MFA is that even if a password is stolen or hacked, the account is not compromised, because a second factor (a security device) is also required to log in.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What do Security Groups regulate for an EC2 instance?",
+    "ground_truth": "Security Groups act as a firewall for EC2 instances, regulating access to ports, authorised IPv4 and IPv6 ranges, and controlling both inbound network traffic (from others to the instance) and outbound network traffic (from the instance to others).",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "Name some actions in AWS that can only be performed by the root user.",
+    "ground_truth": "Only the root user can change account settings (account name, email, root password/access keys), view certain tax invoices, close the AWS account, restore IAM user permissions, change or cancel the AWS Support plan, register as a seller in the Reserved Instance Marketplace, configure an S3 bucket to enable MFA, and sign up for AWS GovCloud.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What does IAM Access Analyzer help you find?",
+    "ground_truth": "IAM Access Analyzer identifies which resources (such as S3 buckets, IAM roles, KMS keys, Lambda functions, or SQS queues) are shared with entities outside a defined 'zone of trust' (an AWS account or AWS Organization), generating findings for access from outside that zone.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What are the key characteristics of an Amazon SQS Standard Queue?",
+    "ground_truth": "SQS Standard Queue is a fully managed, serverless-like service that scales from 1 message per second to tens of thousands per second, has a default message retention of 4 days (maximum 14 days), offers low latency (under 10 ms on publish and receive), and deletes messages once they are read by consumers.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What is the main difference between an SQS Standard Queue and an SQS FIFO Queue?",
+    "ground_truth": "An SQS FIFO (First In First Out) Queue guarantees that messages are processed by the consumer in the order they were sent, whereas the Standard Queue does not guarantee ordering.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "Which relational database engines does Amazon RDS support?",
+    "ground_truth": "Amazon RDS supports PostgreSQL, MySQL, MariaDB, Oracle, Microsoft SQL Server, IBM DB2, and Amazon's proprietary Aurora database.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What advantages does Amazon RDS offer over running a database directly on EC2, and what is one limitation?",
+    "ground_truth": "RDS provides automated provisioning and OS patching, continuous backups with point-in-time restore, monitoring dashboards, read replicas, Multi-AZ setups for disaster recovery, managed maintenance windows, and both vertical and horizontal scaling. The main limitation is that you cannot SSH into the underlying database instance.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "Which programming languages does AWS Lambda natively support?",
+    "ground_truth": "AWS Lambda natively supports Node.js, Python, Java, C# (.NET Core) and PowerShell, and Ruby, plus a Custom Runtime API for community-supported languages such as Rust or Go.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What does the AWS Lambda free tier include, in terms of requests and compute time?",
+    "ground_truth": "The Lambda free tier includes the first 1,000,000 requests per month free (then $0.20 per million requests) and 400,000 GB-seconds of compute time per month free (then $1.00 per 600,000 GB-seconds).",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What scaling strategies are available for an Auto Scaling Group in AWS?",
+    "ground_truth": "Auto Scaling Groups support manual scaling (updating the size directly), dynamic scaling (simple/step scaling, target tracking scaling, and scheduled scaling based on known usage patterns), and predictive scaling, which uses machine learning to provision capacity ahead of anticipated traffic.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
+  },
+  {
+    "question": "What are the subscription and topic limits for Amazon SNS?",
+    "ground_truth": "An Amazon SNS topic supports up to 12,500,000 subscriptions per topic, with a limit of 100,000 topics per account.",
+    "source": "AWS_Certified_Cloud_Practitioner.pdf"
   },
   {
     "question": "What is HyDE in the context of information retrieval?",
@@ -100,28 +335,18 @@
     "source": "none"
   },
   {
-    "question": "What role does swarm intelligence play in the future of AI education?",
-    "ground_truth": "Swarm intelligence may change teachers' duties from knowledge transmission to knowledge organization, and facilitate adaptivity in dynamic or unstable environments. Learners may shift from knowledge absorbers to creators who actively construct knowledge by interfacing with the system.",
-    "source": "sample2.pdf"
-  },
-  {
-    "question": "What screening process was used to select papers for the AI education review?",
-    "ground_truth": "Papers were selected if they involved a specific AI technique as an intervention in assisting learning or teaching and provided empirical evidence or in-depth analysis. Each full text was read and screened individually by three panel members with doctoral degrees or professorships in learning technology. The process yielded 100 articles from an original set of 121.",
-    "source": "sample2.pdf"
-  },
-  {
-    "question": "What affection computing techniques are described in the AI education paper?",
-    "ground_truth": "Five typical AI techniques that support affection computing are described: complex algorithms designed with human factors, visualization, XR including virtual, augmented, and mixed reality, wearable techniques such as Google glasses, and modern neuroscience.",
-    "source": "sample2.pdf"
-  },
-  {
     "question": "What is the current stock price of Apple Inc?",
     "ground_truth": "I cannot answer this question based on the provided documents.",
     "source": "none"
   },
   {
-    "question": "What does the DATA 606 course require students to upload to YouTube?",
-    "ground_truth": "Students are required to upload their project video to YouTube and share their video via GitHub. These presentations serve as a rehearsal for their main in-class presentation.",
-    "source": "sample.pdf"
+    "question": "What is the visa application cost for an Australian Skilled Independent (Subclass 189) visa?",
+    "ground_truth": "I cannot answer this question based on the provided documents.",
+    "source": "none"
+  },
+  {
+    "question": "What is the price of Azure Blob Storage's Hot access tier?",
+    "ground_truth": "I cannot answer this question based on the provided documents.",
+    "source": "none"
   }
 ]

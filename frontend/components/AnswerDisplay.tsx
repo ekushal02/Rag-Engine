@@ -90,8 +90,7 @@ export default function AnswerDisplay({ answer, citations, onCitationClick, stre
           <div className="text-gray-500 text-sm">
             <p>No relevant information found in the ingested documents.</p>
             <p className="mt-1 text-xs text-gray-400">
-              Try asking about document contents, grading criteria, research findings,
-              or course requirements.
+              Try rephrasing your question, or check that the relevant document has been uploaded.
             </p>
           </div>
         ) : (
