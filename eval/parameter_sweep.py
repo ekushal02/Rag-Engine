@@ -275,7 +275,7 @@ def run_sweep(sleep_seconds: int = 30, force: bool = False):
         f"All {len(all_scores)} configuration(s) evaluated and ChromaDB is on the winning config."
     )
     print(f"Winner: {winner['label']}  (avg_score={winner['avg_score']:.4f})")
-    print("Full comparison table: eval/results/summary_scores.csv")
+    print("Full comparisons table: eval/results/summary_scores.csv")
     print(f"Completion marker written to: {SWEEP_COMPLETE_PATH}")
     print("#" * 80)
 
